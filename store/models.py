@@ -2,6 +2,27 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=200,  null=True)
+    email = models.CharField(max_length=200, null=True)
+
+    def __str__(self): #--> Importante! me ayuda a visualizar mejor
+        return self.name
+
+class Product(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    price = models.FloatField()
+    digital = models.BooleanField(default=False, null=True, )
+    photo = models.ImageField(upload_to="products", default=False)
+    
+    def __str__(self): 
+        return self.name
+
+
+'''
+** BLOQUE DE CODIGO DE YOINER, TABLAS DE LA BASE DE DATOS **
+
+class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              null=False, blank=False, verbose_name='Usuario')
     name = models.CharField(max_length=200, null=False,
@@ -79,3 +100,4 @@ class OrderItem(models.Model):
         db_table = 'orderitems'
         verbose_name = 'Articulo pedido'
         verbose_name_plural = 'Articulos pedidos'
+'''
