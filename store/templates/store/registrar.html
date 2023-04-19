@@ -1,0 +1,21 @@
+{% extends 'store/main.html'%}
+{% load static %}
+{% block content %}
+<div class="row">
+    <h3>Formulario de Registro</h3>
+    <form action="/registrar/" method="post">
+        {% if messages %}
+        {% for msj in messages %}
+        <p>  {{msj}} </p>
+        {% endfor %}
+        {% endif %}
+
+        {% csrf_token %}
+        
+        {{ formulario.as_p }}
+        <input type="submit" value="Registrar">
+        <input type="reset" value="Borrar">
+    </form>
+
+</div>
+{% endblock content %}   

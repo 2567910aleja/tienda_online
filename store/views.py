@@ -1,5 +1,20 @@
 from django.shortcuts import render
 from store.models import *
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from .form import UserRegisterForm
+
+def registrar(request):
+    if request.method=="POST":
+        form=UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username=form.cleaned_data["username"]
+            messages.success(request, "Usuario %s Creado Correctamente" %username)
+    else:
+        form=UserRegisterForm()
+    context={"formulario":form}
+    return render(request, "store/registrar.html",context)
 
 def store(request):
     context={
