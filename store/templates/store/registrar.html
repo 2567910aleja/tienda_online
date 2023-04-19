@@ -1,7 +1,7 @@
 {% extends 'store/main.html'%}
 {% load static %}
 {% block content %}
-<div class="row">
+
     <h3>Formulario de Registro</h3>
     <form action="/registrar/" method="post">
         {% if messages %}
@@ -17,5 +17,4 @@
         <input type="reset" value="Borrar">
     </form>
 
-</div>
 {% endblock content %}   
