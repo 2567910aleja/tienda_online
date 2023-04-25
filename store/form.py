@@ -6,7 +6,7 @@ class UserRegisterForm(UserCreationForm):
     username=forms.CharField(label="Nombre de Usuario")
     email=forms.EmailField(label="Correo")
     password1=forms.CharField(label="Contraseña", widget=forms.PasswordInput)
-    password2=forms.CharField(label="Confirme Contraseña", widget=forms.PasswordInput)
+    password2=forms.CharField(label="Confirmar Contraseña", widget=forms.PasswordInput)
 
     class Meta:
         model=User

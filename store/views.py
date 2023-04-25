@@ -11,6 +11,8 @@ def salir(request):
     return redirect("ingresar")
 
 def ingresar(request):
+    form=AuthenticationForm()
+    context={"formulario":form}
     if request.method=="POST":
         form=AuthenticationForm(request, request.POST)
         if form.is_valid():
@@ -23,11 +25,12 @@ def ingresar(request):
                 return redirect("store")
             else:
                 messages.error(request, "El usuario o contraseña son incorrectos")
+                return render(request, "store/login.html",context)
         else:
             messages.error(request, "El usuario o contraseña son incorrectos")
+            return render(request, "store/login.html",context)
     else:
-        form=AuthenticationForm()
-        context={"formulario":form}
+        
         return render(request, "store/login.html",context)
 
 def registrar(request):
@@ -36,7 +39,16 @@ def registrar(request):
         if form.is_valid():
             form.save()
             username=form.cleaned_data["username"]
-            messages.success(request, "Usuario %s Creado Correctamente" %username)
+            contra=form.cleaned_data["password1"]
+            # messages.success(request, "Usuario %s Creado Correctamente" %username)
+            usuario=authenticate(username=username, password=contra)
+            login(request, usuario)
+            return redirect("store")
+        else:
+            for field in form:
+                for error in field.errors:
+                    messages.success(request, f"{error}")
+            return redirect("registrar")
     else:
         form=UserRegisterForm()
     context={"formulario":form}
